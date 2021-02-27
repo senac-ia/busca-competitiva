@@ -51,7 +51,7 @@ class JogoVelha(Jogo):
         return posicao[0] == posicao[4] and posicao[0] == posicao[8] and posicao[0] != Quadrado.V or \
         posicao[2] == posicao[4] and posicao[2] == posicao[6] and posicao[2] != Quadrado.V
 
-    def avaliar(self, jogador):
+    def calcular_utilidade(self, jogador):
         if self.venceu() and self._turno == jogador:
             return -1
         elif self.venceu() and self._turno != jogador:
