@@ -3,7 +3,7 @@ from minimax import melhor_jogada_agente, melhor_jogada_agente_poda
 
 def jogada_humano():
   jogada = -1
-  while jogada not in jogo.jogos_validos():
+  while jogada not in jogo.gerar_jogos_validos():
     jogada = int(input("Escolha um quadrado (0-8):"))
   return jogada
 
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     print(f"Jogada do Computador é {computador}")
     jogo = jogo.jogar(computador)
     print(jogo)
-    
+
     if jogo.venceu():
       print("Computador venceu!")
       break

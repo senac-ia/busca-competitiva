@@ -9,7 +9,7 @@ def minimax(jogo, turno_max, jogador, profundidade_maxima = 8):
     melhor_valor = float("-inf") # Menos infinito é o menor valor
 
     # busca todos os possíveis jogos
-    for proximo_jogo in jogo.jogos_validos():
+    for proximo_jogo in jogo.gerar_jogos_validos():
       utilidade = minimax(jogo.jogar(proximo_jogo), False, jogador, profundidade_maxima - 1)
       melhor_valor = max(utilidade, melhor_valor) # proximo_jogo com o maior valor
     
@@ -19,7 +19,7 @@ def minimax(jogo, turno_max, jogador, profundidade_maxima = 8):
     pior_valor = float("inf") # Mais infinito é o maior valor
 
     # busca todos os possíveis jogos
-    for proximo_jogo in jogo.jogos_validos():
+    for proximo_jogo in jogo.gerar_jogos_validos():
       utilidade = minimax(jogo.jogar(proximo_jogo), True, jogador, profundidade_maxima - 1)
       pior_valor = min(utilidade, pior_valor) # proximo_jogo com o menor valor
     
@@ -32,7 +32,7 @@ def minimax_alfabeta(jogo, turno_max, jogador, profundidade_maxima = 8, alfa = f
 
   if turno_max: # turno do MAX
     # busca todos os possíveis jogos
-    for proximo_jogo in jogo.jogos_validos():
+    for proximo_jogo in jogo.gerar_jogos_validos():
       utilidade = minimax_alfabeta(jogo.jogar(proximo_jogo), False, jogador, profundidade_maxima - 1, alfa, beta)
       alfa = max(utilidade, alfa)
       if beta <= alfa:
@@ -41,7 +41,7 @@ def minimax_alfabeta(jogo, turno_max, jogador, profundidade_maxima = 8, alfa = f
   
   else: # turno no MIN
     # busca todos os possíveis jogos
-    for proximo_jogo in jogo.jogos_validos():
+    for proximo_jogo in jogo.gerar_jogos_validos():
       utilidade = minimax_alfabeta(jogo.jogar(proximo_jogo), True, jogador, profundidade_maxima - 1, alfa, beta)
       beta = min(utilidade, beta)
       if beta <= alfa:
@@ -52,7 +52,7 @@ def minimax_alfabeta(jogo, turno_max, jogador, profundidade_maxima = 8, alfa = f
 def melhor_jogada_agente(jogo, profundidade_maxima = 8):
   melhor_valor = float("-inf")
   melhor_jogada = -1
-  for proximo_jogo in jogo.jogos_validos():
+  for proximo_jogo in jogo.gerar_jogos_validos():
     utilidade = minimax(jogo.jogar(proximo_jogo), False, jogo.turno(), profundidade_maxima)
     if utilidade > melhor_valor:
       melhor_valor = utilidade
@@ -62,7 +62,7 @@ def melhor_jogada_agente(jogo, profundidade_maxima = 8):
 def melhor_jogada_agente_poda(jogo, profundidade_maxima = 8):
   melhor_valor = float("-inf")
   melhor_jogada = -1
-  for proximo_jogo in jogo.jogos_validos():
+  for proximo_jogo in jogo.gerar_jogos_validos():
     utilidade = minimax_alfabeta(jogo.jogar(proximo_jogo), False, jogo.turno(), profundidade_maxima)
     if utilidade > melhor_valor:
       melhor_valor = utilidade

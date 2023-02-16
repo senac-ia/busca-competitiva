@@ -13,7 +13,7 @@ class JogoVelha(Jogo):
       temp[local] = self._turno
       return JogoVelha(temp, "O")
 
-    def jogos_validos(self):
+    def gerar_jogos_validos(self):
       return [p for p in range(len(self.posicao)) if self.posicao[p] == " "]
     
     def venceu(self):
@@ -21,16 +21,19 @@ class JogoVelha(Jogo):
       self._venceu_colunas(self.posicao) or \
       self._venceu_diagonal(self.posicao) 
 
+     # linhas igual e não é " "
     def _venceu_linhas(self, posicao):
       return posicao[0] == posicao[1] and posicao[0] == posicao[2] and posicao[0] != " " or \
         posicao[3] == posicao[4] and posicao[3] == posicao[5] and posicao[3] != " " or \
         posicao[6] == posicao[7] and posicao[6] == posicao[8] and posicao[6] != " "
 
+    # colunas igual e não é " "
     def _venceu_colunas(self, posicao):
       return posicao[0] == posicao[3] and posicao[0] == posicao[6] and posicao[0] != " " or \
         posicao[1] == posicao[4] and posicao[1] == posicao[7] and posicao[1] != " " or \
         posicao[2] == posicao[5] and posicao[2] == posicao[8] and posicao[2] != " "
 
+    # diagonal igual e não é " "
     def _venceu_diagonal(self, posicao):
       return posicao[0] == posicao[4] and posicao[0] == posicao[8] and posicao[0] != " " or \
         posicao[2] == posicao[4] and posicao[2] == posicao[6] and posicao[2] != " "

@@ -9,14 +9,14 @@ class Jogo():
   def jogar(self, localizacao):
     pass
 
-  def jogos_validos(self):
+  def gerar_jogos_validos(self):
     pass
 
   def venceu(self):
     pass
 
   def empate(self):
-    return (not self.venceu()) and (len(self.jogos_validos()) == 0)
+    return (not self.venceu()) and (len(self.gerar_jogos_validos()) == 0)
 
   def avaliar(self, jogador):
     pass
