@@ -2,6 +2,7 @@ from jogo_velha import JogoVelha
 
 if __name__ == "__main__":
   jogo = JogoVelha()
+  print(jogo.imprimir())
 
   while True:
     humano = jogo.capturar_jogada_humano()

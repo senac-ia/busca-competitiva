@@ -28,7 +28,8 @@ class JogoVelha(Jogo):
   def capturar_jogada_humano(self):
     jogada = -1
     while jogada not in self.gerar_jogos_validos():
-      jogada = int(input("Escolha um quadrado (0-8):"))
+      jogada = int(input("Escolha um quadrado (1-9):"))
+      jogada -= 1 # 1-9 -> 0-8
     return jogada
   
   def capturar_jogada_agente(self):
