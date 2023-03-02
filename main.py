@@ -1,17 +1,10 @@
 from jogo_velha import JogoVelha
-from minimax import melhor_jogada_agente, melhor_jogada_agente_poda
-
-def jogada_humano():
-  jogada = -1
-  while jogada not in jogo.gerar_jogos_validos():
-    jogada = int(input("Escolha um quadrado (0-8):"))
-  return jogada
 
 if __name__ == "__main__":
   jogo = JogoVelha()
 
   while True:
-    humano = jogada_humano()
+    humano = jogo.capturar_jogada_humano()
     jogo = jogo.jogar(humano)
     if jogo.venceu():
       print("Humano Venceu!")
@@ -20,10 +13,10 @@ if __name__ == "__main__":
       print("Empate!")
       break
 
-    computador = melhor_jogada_agente_poda(jogo)
+    computador = jogo.capturar_jogada_agente()
     print(f"Jogada do Computador é {computador}")
     jogo = jogo.jogar(computador)
-    print(jogo)
+    print(jogo.imprimir())
 
     if jogo.venceu():
       print("Computador venceu!")
