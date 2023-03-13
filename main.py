@@ -3,7 +3,7 @@ from jogo_velha import JogoVelha
 from nim import Nim
 
 if __name__ == "__main__":
-  jogo = JogoVelha()
+  jogo = Nim()
   (jogador_humano, jogador_agente) = jogo.inicializar_jogadores()
 
   print("Situação do Jogo:")

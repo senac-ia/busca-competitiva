@@ -6,21 +6,26 @@ class JogadaNim(Jogada):
     self.valor1 = valor1
     self.valor2 = valor2
 
+  def valores(self, pilha, valor1, valor2):
+    self.pilha = pilha
+    self.valor1 = valor1
+    self.valor2 = valor2
+
   def e_valida(self):
-    return self.valor1 == self.valor2 and self.valor2 != 1 and self.valor1 != 1
+    return self.valor1 != self.valor2 and \
+      self.valor2 != 1 and self.valor1 != 1 and \
+      self.pilha >= 0
 
 class JogadorNimHumano(JogadorHumano):
+  # capturo a entrada do teclado o número da pilha e a 
+  # posição que o usuário deseja partilhar esta pilha e retorno a escolha do usuário
   def jogar(self, jogo):
-    # capturo a entrada do teclado o número da pilha e a posição que o usuário deseja partilhar esta pilha e retorno a escolha do usuário
-    
-    pilha = -1
-    while pilha not in range(len(jogo.estado)):
-      pilha = int(input("Escolha uma pilha (1-"+ str(len(jogo.estado)) +"): "))
-      pilha = pilha - 1
-    valor = int(input("Escolha um valor (1-"+ str(jogo.estado[pilha]) +"): "))
-    jogada = JogadaNim(pilha, valor, jogo.estado[pilha]-valor)
-    if jogada.e_valida():
-      print("Jogada inválida!")
+    jogada = JogadaNim(-1, 1, 1)
+
+    while not jogada.e_valida():
+      jogada.pilha  = int(input("Escolha uma pilha (1-"+ str(len(jogo.estado)) +"): ")) - 1
+      jogada.valor1 = int(input("Escolha um valor (1-"+ str(jogo.estado[jogada.pilha]) +"): "))
+      jogada.valor2 = jogo.estado[jogada.pilha] - jogada.valor1
     return jogada
 
 class Nim(Jogo):
