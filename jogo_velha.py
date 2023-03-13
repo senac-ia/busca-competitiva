@@ -1,11 +1,19 @@
-from jogo import Jogo, JogadorHumano, JogadorAgente
+from jogo import Jogo, JogadorHumano, JogadorAgente, Jogada
+
+class JogadaVelha(Jogada):
+  def __init__(self, posicao_quadrante):
+    self.posicao_quadrante = posicao_quadrante
+
+  def e_valida(self, jogo):
+    return self.posicao_quadrante >= 0 and self.posicao_quadrante <= 8 and\
+      jogo.posicao[self.posicao_quadrante] == "⬜"
 
 class JogadorVelhaHumano(JogadorHumano):
   def jogar(self, jogo):
-    jogada = -1
-    while jogada not in jogo.gerar_jogos_validos():
-      jogada = int(input("Escolha um quadrado (1-9): "))
-      jogada -= 1 # 1-9 -> 0-8
+    jogada = JogadaVelha(-1)
+    while not jogada.e_valida(jogo):
+      posicao_quadrante = int(input("Escolha um quadrado (1-9): "))
+      jogada.posicao_quadrante = posicao_quadrante - 1 # 1-9 -> 0-8
     return jogada
 
 class JogoVelha(Jogo):
@@ -25,13 +33,13 @@ class JogoVelha(Jogo):
   def turno(self):
     return self._turno
   
-  def jogar(self, local):
-    temp = self.posicao.copy()
-    temp[local] = self._turno.imprimir()
-    return JogoVelha(temp, self._turno.proximo_turno())
+  def jogar(self, jogada):
+    novo_estado = self.posicao.copy()
+    novo_estado[jogada.posicao_quadrante] = self._turno.imprimir()
+    return JogoVelha(novo_estado, self._turno.proximo_turno())
 
   def gerar_jogos_validos(self):
-    return [p for p in range(len(self.posicao)) if self.posicao[p] == "⬜"]
+    return [JogadaVelha(quadrante) for quadrante in range(len(self.posicao)) if self.posicao[quadrante] == "⬜"]
   
   def venceu(self):
     return self._venceu_linhas(self.posicao) or \
@@ -39,7 +47,7 @@ class JogoVelha(Jogo):
     self._venceu_diagonal(self.posicao)
   
   def imprimir_jogada(self, jogador, jogada):
-    return f"{jogador.imprimir()} jogou {jogada + 1} ({self.posicao[jogada]})"
+    return f"{jogador.imprimir()} jogou {jogada.posicao_quadrante + 1} ({self.posicao[jogada.posicao_quadrante]})"
   
   def imprimir(self):
     return f"""{self.posicao[0]}|{self.posicao[1]}|{self.posicao[2]}

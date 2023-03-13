@@ -1,16 +1,25 @@
-from jogo import Jogo, JogadorHumano, JogadorAgente
+from jogo import Jogo, JogadorHumano, JogadorAgente, Jogada
+
+class JogadaNim(Jogada):
+  def __init__(self, pilha, valor1, valor2):
+    self.pilha = pilha
+    self.valor1 = valor1
+    self.valor2 = valor2
+
+  def e_valida(self):
+    return self.valor1 == self.valor2 and self.valor2 != 1 and self.valor1 != 1
 
 class JogadorNimHumano(JogadorHumano):
   def jogar(self, jogo):
     # capturo a entrada do teclado o número da pilha e a posição que o usuário deseja partilhar esta pilha e retorno a escolha do usuário
-    jogada = (-1, 0,0)
+    
     pilha = -1
     while pilha not in range(len(jogo.posicao)):
       pilha = int(input("Escolha uma pilha (1-"+ str(len(jogo.posicao)) +"): "))
       pilha = pilha - 1
     valor = int(input("Escolha um valor (1-"+ str(jogo.posicao[pilha]) +"): "))
-    jogada = (pilha, valor, jogo.posicao[pilha]-valor)
-    if jogada[1] == jogada[2] and jogada[2] != 1 and jogada[1] != 1:
+    jogada = JogadaNim(pilha, valor, jogo.posicao[pilha]-valor)
+    if jogada.e_valida():
       print("Jogada inválida!")
     return jogada
 
@@ -33,14 +42,14 @@ class Nim(Jogo):
     return self._turno
   
   def jogar(self, jogada):
-    temp = self.posicao.copy()
+    novo_estado = self.posicao.copy()
     # remove a pilha que o usuário escolheu
     # adiciona as novas pilhas
-    del temp[jogada[0]] 
-    temp.append(jogada[1])
-    temp.append(jogada[2])
+    del novo_estado[jogada.pilha] 
+    novo_estado.append(jogada.valor1)
+    novo_estado.append(jogada.valor2)
 
-    return Nim(temp, self._turno.proximo_turno())
+    return Nim(novo_estado, self._turno.proximo_turno())
 
   def gerar_jogos_validos(self):
     # para cada item da pilha self.posicao
@@ -50,15 +59,16 @@ class Nim(Jogo):
     jogos_validos = []
     for torre in range(len(self.posicao)):
       for i in range(1, (self.posicao[torre] // 2) + 1):
-        if (i != self.posicao[torre]-i): # corrigir por aqui
-          jogos_validos.append((torre, i, self.posicao[torre]-i))
+        if (i != self.posicao[torre]-i):
+          jogada = JogadaNim(torre, i, self.posicao[torre]-i)
+          jogos_validos.append(jogada)
     return jogos_validos
   
   def venceu(self):
     return len(self.gerar_jogos_validos()) == 0
   
   def imprimir_jogada(self, jogador, jogada):
-    return f"{jogador.imprimir()} escolheu a pilha {str(jogada[0]+1)} e partilhou em ({str(jogada[1])},{str(jogada[2])})"
+    return f"{jogador.imprimir()} escolheu a pilha {str(jogada.pilha+1)} e partilhou em ({str(jogada.valor1)},{str(jogada.valor2)})"
 
   def imprimir(self):
     return f"""Tabuleiro:

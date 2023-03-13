@@ -1,5 +1,9 @@
 from minimax import minimax, minimax_alfabeta
 
+class Jogada:
+  def e_valida(self):
+    raise NotImplementedError("Deve ser implementado")
+
 class Jogador:
   def __init__(self, identificador):
     self.identificador = identificador
@@ -39,7 +43,7 @@ class Jogo():
   def turno(self):
     raise NotImplementedError("Deve ser implementado")
 
-  def jogar(self, localizacao):
+  def jogar(self, jogada):
     raise NotImplementedError("Deve ser implementado")
 
   def gerar_jogos_validos(self):
