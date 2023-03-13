@@ -1,5 +1,3 @@
-from jogo import Jogo, Jogador
-
 # Encotrar o melhor movimento do computador
 def melhor_jogada_agente(jogo, profundidade_maxima = 8):
   melhor_valor = float("-inf")

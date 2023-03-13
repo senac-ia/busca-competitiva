@@ -1,5 +1,4 @@
 from jogo import Jogo
-from minimax import melhor_jogada_agente
 
 class JogoVelha(Jogo):
   def __init__(self, posicao = ["⬜"] * 9, turno = "❌"):
@@ -32,8 +31,8 @@ class JogoVelha(Jogo):
       jogada -= 1 # 1-9 -> 0-8
     return jogada
   
-  def capturar_jogada_agente(self):
-    return melhor_jogada_agente(self)
+  def imprimir_jogada(self, turno, jogada):
+    return f"{turno} jogou {jogada + 1} ({self.posicao[jogada]})"
   
   def imprimir(self):
     return f"""{self.posicao[0]}|{self.posicao[1]}|{self.posicao[2]}

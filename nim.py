@@ -1,5 +1,4 @@
 from jogo import Jogo
-from minimax import melhor_jogada_agente
 
 class Nim(Jogo):
   def __init__(self, posicao = [10], turno = "🧑"):
@@ -43,19 +42,14 @@ class Nim(Jogo):
     jogada = (pilha, valor, self.posicao[pilha]-valor)
     if jogada[1] == jogada[2] and jogada[2] != 1 and jogada[1] != 1:
       print("Jogada inválida!")
+    return jogada
+  
+  def imprimir_jogada(self, turno, jogada):
+    return f"{turno} escolheu a pilha {str(jogada[0]+1)} e partilhou em ({str(jogada[1])},{str(jogada[2])})"
 
-    print("O humano escolheu a pilha " + str(jogada[0]+1) + " e partilhou em " + str(jogada[1]) + " e " + str(jogada[2]))
-    return jogada
-  
-  def capturar_jogada_agente(self):
-    jogada = melhor_jogada_agente(self)
-    print("O agente escolheu a pilha " + str(jogada[0]+1) + " e partilhou em " + str(jogada[1]) + " e " + str(jogada[2]))
-    return jogada
-  
   def imprimir(self):
     return f"""Tabuleiro:
-{self.posicao}
-"""
+{self.posicao}"""
 
   def calcular_utilidade(self, jogador):
     if self.venceu() and self._turno == jogador:
