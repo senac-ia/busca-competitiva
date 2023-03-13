@@ -13,7 +13,7 @@ if __name__ == "__main__":
   while True:
     # Turno no humano
     jogada_humano = jogador_humano.jogar(jogo)
-    print(jogo.imprimir_jogada(jogo.turno(), jogada_humano))
+    print(jogo.imprimir_jogada(jogador_humano, jogada_humano))
     print("=======================================")
     jogo = jogo.jogar(jogada_humano)
     
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     time.sleep(5)
 
     jogada_agente = jogador_agente.jogar(jogo)
-    print(jogo.imprimir_jogada(jogo.turno(), jogada_agente))
+    print(jogo.imprimir_jogada(jogador_agente, jogada_agente))
     print("=======================================")
     jogo = jogo.jogar(jogada_agente)
     
