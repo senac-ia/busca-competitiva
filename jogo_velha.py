@@ -1,9 +1,20 @@
-from jogo import Jogo
+from jogo import Jogo, JogadorHumano, JogadorAgente
+
+class JogadorVelhaHumano(JogadorHumano):
+  def jogar(self, jogo):
+    jogada = -1
+    while jogada not in jogo.gerar_jogos_validos():
+      jogada = int(input("Escolha um quadrado (1-9):"))
+      jogada -= 1 # 1-9 -> 0-8
+    return jogada
 
 class JogoVelha(Jogo):
   def __init__(self, posicao = ["⬜"] * 9, turno = "❌"):
     self.posicao = posicao
     self._turno = turno
+
+  def inicializar_jogadores(self):
+    return [JogadorVelhaHumano("❌"), JogadorAgente("🔵")]
 
   def turno(self):
     return self._turno
@@ -23,13 +34,6 @@ class JogoVelha(Jogo):
     return self._venceu_linhas(self.posicao) or \
     self._venceu_colunas(self.posicao) or \
     self._venceu_diagonal(self.posicao)
-  
-  def capturar_jogada_humano(self):
-    jogada = -1
-    while jogada not in self.gerar_jogos_validos():
-      jogada = int(input("Escolha um quadrado (1-9):"))
-      jogada -= 1 # 1-9 -> 0-8
-    return jogada
   
   def imprimir_jogada(self, turno, jogada):
     return f"{turno} jogou {jogada + 1} ({self.posicao[jogada]})"

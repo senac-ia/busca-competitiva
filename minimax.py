@@ -1,14 +1,3 @@
-# Encotrar o melhor movimento do computador
-def melhor_jogada_agente(jogo, profundidade_maxima = 8):
-  melhor_valor = float("-inf")
-  melhor_jogada = -1
-  for proximo_jogo in jogo.gerar_jogos_validos():
-    utilidade = minimax_alfabeta(jogo.jogar(proximo_jogo), False, jogo.turno(), profundidade_maxima)
-    if utilidade > melhor_valor:
-      melhor_valor = utilidade
-      melhor_jogada = proximo_jogo
-  return melhor_jogada
-
 ## Minimax sem poda
 def minimax(jogo, turno_max, jogador, profundidade_maxima = 8):
   # se o jogo acabou ou se a profundidade é máxima

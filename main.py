@@ -3,21 +3,22 @@ from jogo_velha import JogoVelha
 from nim import Nim
 
 if __name__ == "__main__":
-  jogo = Nim()
+  jogo = JogoVelha()
+  (jogador_humano, jogador_agente) = jogo.inicializar_jogadores()
+
   print("Situação do Jogo:")
   print(jogo.imprimir())
   print("=======================================")
 
   while True:
     # Turno no humano
-    jogada_humano = jogo.capturar_jogada_humano()
+    jogada_humano = jogador_humano.jogar(jogo)
     print(jogo.imprimir_jogada(jogo.turno(), jogada_humano))
     print("=======================================")
     jogo = jogo.jogar(jogada_humano)
     
-
     if jogo.venceu():
-      print("Humano Venceu!")
+      print(f"{jogador_humano.imprimir()} Venceu!")
       break
     elif jogo.empate():
       print("Empate!")
@@ -29,9 +30,10 @@ if __name__ == "__main__":
     print("=======================================")
 
     # Dorme um pouco para dar um efeito de pensar
+    print(f"{jogador_agente.imprimir()} está pensando...")
     time.sleep(5)
 
-    jogada_agente = jogo.capturar_jogada_agente()
+    jogada_agente = jogador_agente.jogar(jogo)
     print(jogo.imprimir_jogada(jogo.turno(), jogada_agente))
     print("=======================================")
     jogo = jogo.jogar(jogada_agente)
@@ -39,7 +41,7 @@ if __name__ == "__main__":
     print(jogo.imprimir())
 
     if jogo.venceu():
-      print("Computador venceu!")
+      print(f"{jogador_agente.imprimir()} venceu!")
       break
     elif jogo.empate():
       print("Empate!")
