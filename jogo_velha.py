@@ -17,26 +17,26 @@ class JogadorVelhaHumano(JogadorHumano):
     return jogada
 
 class JogoVelha(Jogo):
-  def __init__(self, posicao = ["⬜"] * 9, turno = None):
-    self.posicao = posicao
-    self._turno = turno
+  def __init__(self, estado = ["⬜"] * 9, jogador_turno = None):
+    self.posicao = estado
+    self.jogador_turno = jogador_turno
 
   def inicializar_jogadores(self):
     (humano, agente) = (JogadorVelhaHumano("❌"), JogadorAgente("🔵"))
     humano.define_proximo_turno(agente)
     agente.define_proximo_turno(humano)
 
-    self._turno = humano
+    self.jogador_turno = humano
 
     return (humano, agente)
 
   def turno(self):
-    return self._turno
+    return self.jogador_turno
   
   def jogar(self, jogada):
     novo_estado = self.posicao.copy()
-    novo_estado[jogada.posicao_quadrante] = self._turno.imprimir()
-    return JogoVelha(novo_estado, self._turno.proximo_turno())
+    novo_estado[jogada.posicao_quadrante] = self.jogador_turno.imprimir()
+    return JogoVelha(novo_estado, self.jogador_turno.proximo_turno())
 
   def gerar_jogos_validos(self):
     return [JogadaVelha(quadrante) for quadrante in range(len(self.posicao)) if self.posicao[quadrante] == "⬜"]
@@ -57,9 +57,9 @@ class JogoVelha(Jogo):
 {self.posicao[6]}|{self.posicao[7]}|{self.posicao[8]}"""
 
   def calcular_utilidade(self, jogador):
-    if self.venceu() and self._turno == jogador:
+    if self.venceu() and self.jogador_turno == jogador:
       return -1
-    elif self.venceu() and self._turno != jogador:
+    elif self.venceu() and self.jogador_turno != jogador:
       return 1
     else:
       return 0

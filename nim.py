@@ -24,9 +24,9 @@ class JogadorNimHumano(JogadorHumano):
     return jogada
 
 class Nim(Jogo):
-  def __init__(self, posicao = [10], turno = None):
+  def __init__(self, posicao = [10], jogador_turno = None):
     self.posicao = posicao
-    self._turno = turno
+    self.jogador_turno = jogador_turno
 
   def inicializar_jogadores(self):
     (humano, agente) = (JogadorNimHumano("🧑"), JogadorAgente("🤖"))
@@ -34,12 +34,12 @@ class Nim(Jogo):
     humano.define_proximo_turno(agente)
     agente.define_proximo_turno(humano)
 
-    self._turno = humano
+    self.jogador_turno = humano
 
     return (humano, agente)
 
   def turno(self):
-    return self._turno
+    return self.jogador_turno
   
   def jogar(self, jogada):
     novo_estado = self.posicao.copy()
@@ -49,7 +49,7 @@ class Nim(Jogo):
     novo_estado.append(jogada.valor1)
     novo_estado.append(jogada.valor2)
 
-    return Nim(novo_estado, self._turno.proximo_turno())
+    return Nim(novo_estado, self.jogador_turno.proximo_turno())
 
   def gerar_jogos_validos(self):
     # para cada item da pilha self.posicao
@@ -75,9 +75,9 @@ class Nim(Jogo):
 {self.posicao}"""
 
   def calcular_utilidade(self, jogador):
-    if self.venceu() and self._turno == jogador:
+    if self.venceu() and self.jogador_turno == jogador:
       return -1
-    elif self.venceu() and self._turno != jogador:
+    elif self.venceu() and self.jogador_turno != jogador:
       return 1
     else:
       return 0

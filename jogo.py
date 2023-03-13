@@ -40,6 +40,10 @@ class Jogador:
     raise NotImplementedError("Deve ser implementado")
 
 class Jogo():
+  def __init__(self, estado = None, jogador_turno = None):
+    self.estado = estado
+    self.jogador_turno = jogador_turno
+
   def turno(self):
     raise NotImplementedError("Deve ser implementado")
 
