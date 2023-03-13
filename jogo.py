@@ -4,11 +4,17 @@ class Jogador:
   def __init__(self, identificador):
     self.identificador = identificador
 
+  def define_proximo_turno(self, proximo_turno):
+    self.jogador_proximo_turno = proximo_turno
+
   def imprimir(self):
     return self.identificador
   
   def jogar(self, jogo):
     raise NotImplementedError("Deve ser implementado")
+  
+  def proximo_turno(self):
+    return self.jogador_proximo_turno
 
 class JogadorHumano(Jogador):
   pass

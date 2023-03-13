@@ -4,7 +4,7 @@ class JogadorVelhaHumano(JogadorHumano):
   def jogar(self, jogo):
     jogada = -1
     while jogada not in jogo.gerar_jogos_validos():
-      jogada = int(input("Escolha um quadrado (1-9):"))
+      jogada = int(input("Escolha um quadrado (1-9): "))
       jogada -= 1 # 1-9 -> 0-8
     return jogada
 
@@ -14,18 +14,21 @@ class JogoVelha(Jogo):
     self._turno = turno
 
   def inicializar_jogadores(self):
-    return [JogadorVelhaHumano("❌"), JogadorAgente("🔵")]
+    (humano, agente) = (JogadorVelhaHumano("❌"), JogadorAgente("🔵"))
+    humano.define_proximo_turno(agente)
+    agente.define_proximo_turno(humano)
+
+    self._turno = humano
+
+    return (humano, agente)
 
   def turno(self):
     return self._turno
   
   def jogar(self, local):
     temp = self.posicao.copy()
-    temp[local] = self._turno
-    if self._turno == "❌":
-      return JogoVelha(temp, "🔵")
-    else:
-      return JogoVelha(temp, "❌")
+    temp[local] = self._turno.imprimir()
+    return JogoVelha(temp, self._turno.proximo_turno())
 
   def gerar_jogos_validos(self):
     return [p for p in range(len(self.posicao)) if self.posicao[p] == "⬜"]
@@ -35,8 +38,8 @@ class JogoVelha(Jogo):
     self._venceu_colunas(self.posicao) or \
     self._venceu_diagonal(self.posicao)
   
-  def imprimir_jogada(self, turno, jogada):
-    return f"{turno} jogou {jogada + 1} ({self.posicao[jogada]})"
+  def imprimir_jogada(self, jogador, jogada):
+    return f"{jogador.imprimir()} jogou {jogada + 1} ({self.posicao[jogada]})"
   
   def imprimir(self):
     return f"""{self.posicao[0]}|{self.posicao[1]}|{self.posicao[2]}
