@@ -9,7 +9,7 @@ class JogadorVelhaHumano(JogadorHumano):
     return jogada
 
 class JogoVelha(Jogo):
-  def __init__(self, posicao = ["⬜"] * 9, turno = "❌"):
+  def __init__(self, posicao = ["⬜"] * 9, turno = None):
     self.posicao = posicao
     self._turno = turno
 

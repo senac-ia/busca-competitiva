@@ -15,12 +15,19 @@ class JogadorNimHumano(JogadorHumano):
     return jogada
 
 class Nim(Jogo):
-  def __init__(self, posicao = [10], turno = "🧑"):
+  def __init__(self, posicao = [10], turno = None):
     self.posicao = posicao
     self._turno = turno
 
   def inicializar_jogadores(self):
-    return [JogadorNimHumano("🧑"), JogadorAgente("🤖")]
+    (humano, agente) = (JogadorNimHumano("🧑"), JogadorAgente("🤖"))
+  
+    humano.define_proximo_turno(agente)
+    agente.define_proximo_turno(humano)
+
+    self._turno = humano
+
+    return (humano, agente)
 
   def turno(self):
     return self._turno
@@ -33,10 +40,7 @@ class Nim(Jogo):
     temp.append(jogada[1])
     temp.append(jogada[2])
 
-    if self._turno == "🧑":
-      return Nim(temp, "🤖")
-    else:
-      return Nim(temp, "🧑")
+    return Nim(temp, self._turno.proximo_turno())
 
   def gerar_jogos_validos(self):
     # para cada item da pilha self.posicao
@@ -53,8 +57,8 @@ class Nim(Jogo):
   def venceu(self):
     return len(self.gerar_jogos_validos()) == 0
   
-  def imprimir_jogada(self, turno, jogada):
-    return f"{turno} escolheu a pilha {str(jogada[0]+1)} e partilhou em ({str(jogada[1])},{str(jogada[2])})"
+  def imprimir_jogada(self, jogador, jogada):
+    return f"{jogador.imprimir()} escolheu a pilha {str(jogada[0]+1)} e partilhou em ({str(jogada[1])},{str(jogada[2])})"
 
   def imprimir(self):
     return f"""Tabuleiro:
