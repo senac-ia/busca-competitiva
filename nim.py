@@ -19,8 +19,10 @@ class Nim(Jogo):
       return Nim(temp, "🧑")
 
   def gerar_jogos_validos(self):
-    # para cada item da pilha self.posicao,  eu verifico se é divisível e gero duas pilhas de tamanhos diferentes
-    # e adiciono na lista de jogos válidos
+    # para cada item da pilha self.posicao
+    # se verifica se é divisível
+    # gera duas pilhas de tamanhos diferentes
+    # adiciona na lista de jogos válidos
     jogos_validos = []
     for torre in range(len(self.posicao)):
       for i in range(1, (self.posicao[torre] // 2) + 1):
@@ -58,8 +60,3 @@ class Nim(Jogo):
       return 1
     else:
       return 0
-    
-  #######################################
-  #### Funções auxiliares - privadas ####
-  #######################################
-
