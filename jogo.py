@@ -35,10 +35,6 @@ class JogadorAgente(Jogador):
         melhor_jogada = proximo_jogo
     return melhor_jogada
 
-class Jogador:
-  def oposto(self):
-    raise NotImplementedError("Deve ser implementado")
-
 class Jogo():
   def __init__(self, estado = None, jogador_turno = None):
     self.estado = estado
