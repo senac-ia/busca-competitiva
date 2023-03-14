@@ -32,12 +32,13 @@ def minimax_alfabeta(jogo, jogador, profundidade_maxima = 8, alfa = float("-inf"
     for proximo_jogo in jogo.gerar_jogadas_validas():
       utilidade = minimax_alfabeta(jogo.jogar(proximo_jogo), jogador.proximo_turno(), profundidade_maxima - 1, alfa, beta)
       alfa = max(utilidade, alfa)
-      if beta < alfa: break
-      return alfa
+      if alfa >= beta: break
+    return alfa
+  
   else: # turno no MIN
     # busca todos os possíveis jogos
     for proximo_jogo in jogo.gerar_jogadas_validas():
       utilidade = minimax_alfabeta(jogo.jogar(proximo_jogo), jogador.proximo_turno(), profundidade_maxima - 1, alfa, beta)
       beta = min(utilidade, beta)
-      if beta < alfa: break
-      return beta
+      if alfa >= beta: break
+    return beta
