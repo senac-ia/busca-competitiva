@@ -55,7 +55,7 @@ class Nim(Jogo):
 
     return Nim(novo_estado, self.jogador_turno.proximo_turno())
 
-  def gerar_jogos_validos(self):
+  def gerar_jogadas_validas(self):
     # para cada item da pilha self.estado
     # se verifica se é divisível
     # gera duas pilhas de tamanhos diferentes
@@ -69,7 +69,7 @@ class Nim(Jogo):
     return jogos_validos
   
   def venceu(self):
-    return len(self.gerar_jogos_validos()) == 0
+    return len(self.gerar_jogadas_validas()) == 0
   
   def imprimir_jogada(self, jogador, jogada):
     return f"{jogador.imprimir()} escolheu a pilha {str(jogada.pilha+1)} e partilhou em ({str(jogada.valor1)},{str(jogada.valor2)})"

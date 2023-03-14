@@ -3,7 +3,7 @@ from jogo_velha import JogoVelha
 from nim import Nim
 
 if __name__ == "__main__":
-  jogo = Nim()
+  jogo = JogoVelha()
   (jogador_humano, jogador_agente) = jogo.inicializar_jogadores()
 
   print("Situação do Jogo:")
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # Dorme um pouco para dar um efeito de pensar
     print(f"{jogador_agente.imprimir()} está pensando...")
-    time.sleep(5)
+    time.sleep(2)
 
     jogada_agente = jogador_agente.jogar(jogo)
     print(jogo.imprimir_jogada(jogador_agente, jogada_agente))

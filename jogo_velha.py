@@ -37,7 +37,7 @@ class JogoVelha(Jogo):
     novo_estado[jogada.posicao_quadrante] = self.jogador_turno.imprimir()
     return JogoVelha(novo_estado, self.jogador_turno.proximo_turno())
 
-  def gerar_jogos_validos(self):
+  def gerar_jogadas_validas(self):
     return [JogadaVelha(quadrante) for quadrante in range(len(self.estado)) if self.estado[quadrante] == "⬜"]
   
   def venceu(self):
@@ -56,9 +56,9 @@ class JogoVelha(Jogo):
 {self.estado[6]}|{self.estado[7]}|{self.estado[8]}"""
 
   def calcular_utilidade(self, jogador):
-    if self.venceu() and self.jogador_turno == jogador:
+    if self.venceu() and jogador.e_min():
       return -1
-    elif self.venceu() and self.jogador_turno != jogador:
+    elif self.venceu() and jogador.e_max():
       return 1
     else:
       return 0
